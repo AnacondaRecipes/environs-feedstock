@@ -10,22 +10,28 @@ source:
   sha256: a76307b36fbe856bdca7ee9161e6c466fd7fcffc297109a118c59b54e27e30c9
 
 build:
-  noarch: python
   number: 0
-  script: {{ PYTHON }} -m pip install . -vv
+  skip: True  # [py<36]
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
 
 requirements:
   host:
-    - python >=3.5
+    - python
     - pip
+    - setuptools
+    - wheel
   run:
-    - python >=3.5
-    - marshmallow
+    - python
+    - marshmallow >=3.0.0
     - python-dotenv
 
 test:
   imports:
     - environs
+  requires:
+    - pip
+  commands:
+    - pip check
 
 about:
   home: https://github.com/sloria/environs
@@ -33,6 +39,11 @@ about:
   license_family: MIT
   license_file: LICENSE
   summary: Simplified environment variable parsing
+  description: |
+    environs is a Python library for parsing environment variables. It
+    allows you to store configuration separate from your code, as per
+    The Twelve-Factor App methodology.
+  doc_url: https://github.com/sloria/environs
   dev_url: https://github.com/sloria/environs
 
 extra:
