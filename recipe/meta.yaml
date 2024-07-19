@@ -6,13 +6,25 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: a76307b36fbe856bdca7ee9161e6c466fd7fcffc297109a118c59b54e27e30c9
+  # Use upstream archive tarball for tests
+  url: https://github.com/sloria/environs/archive/refs/tags/{{ version }}.tar.gz
+  sha256: 1209b11f6ed2fadca24ae65a4d751ff0b4dfef1391acd75587c96b14cab3f3c8
+  patches:
+    - patches/0001-remove-some-django-_url-test-dependencies.patch
 
 build:
   number: 0
   skip: True  # [py<36]
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+
+{% set tests_to_skip = "not (" %}
+{% set tests_to_skip = tests_to_skip + "TestDjango" %}
+{% set tests_to_skip = tests_to_skip + " or test_dj_db_url_with_deferred_validation_missing" %}
+{% set tests_to_skip = tests_to_skip + " or test_dj_db_url_with_deferred_validation_invalid" %}
+{% set tests_to_skip = tests_to_skip + " or test_dj_email_url_with_deferred_validation_missing" %}
+{% set tests_to_skip = tests_to_skip + " or test_dj_cache_url_with_deferred_validation_missing" %}
+{% set tests_to_skip = tests_to_skip + " or test_dj_cache_url_with_deferred_validation_invalid" %}
+{% set tests_to_skip = tests_to_skip + ")" %}
 
 requirements:
   host:
@@ -26,12 +38,17 @@ requirements:
     - python-dotenv
 
 test:
+  source_files:
+    - tests
   imports:
     - environs
   requires:
     - pip
+    - pytest
+    - django
   commands:
     - pip check
+    - pytest -v tests -k '{{ tests_to_skip }}'
 
 about:
   home: https://github.com/sloria/environs
