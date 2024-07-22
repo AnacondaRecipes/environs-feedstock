@@ -17,14 +17,6 @@ build:
   skip: True  # [py<36]
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
 
-{% set tests_to_skip = "" %}
-{% set tests_to_skip = tests_to_skip + "TestDjango" %}
-{% set tests_to_skip = tests_to_skip + " or test_dj_db_url_with_deferred_validation_missing" %}
-{% set tests_to_skip = tests_to_skip + " or test_dj_db_url_with_deferred_validation_invalid" %}
-{% set tests_to_skip = tests_to_skip + " or test_dj_email_url_with_deferred_validation_missing" %}
-{% set tests_to_skip = tests_to_skip + " or test_dj_cache_url_with_deferred_validation_missing" %}
-{% set tests_to_skip = tests_to_skip + " or test_dj_cache_url_with_deferred_validation_invalid" %}
-
 requirements:
   build:
     - patch     # [not win]
@@ -38,6 +30,14 @@ requirements:
     - python
     - marshmallow >=3.0.0
     - python-dotenv
+
+{% set tests_to_skip = "" %}
+{% set tests_to_skip = tests_to_skip + "TestDjango" %}
+{% set tests_to_skip = tests_to_skip + " or test_dj_db_url_with_deferred_validation_missing" %}
+{% set tests_to_skip = tests_to_skip + " or test_dj_db_url_with_deferred_validation_invalid" %}
+{% set tests_to_skip = tests_to_skip + " or test_dj_email_url_with_deferred_validation_missing" %}
+{% set tests_to_skip = tests_to_skip + " or test_dj_cache_url_with_deferred_validation_missing" %}
+{% set tests_to_skip = tests_to_skip + " or test_dj_cache_url_with_deferred_validation_invalid" %}
 
 test:
   source_files:
