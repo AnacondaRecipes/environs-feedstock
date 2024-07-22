@@ -47,7 +47,7 @@ test:
   requires:
     - pip
     - pytest
-    - django
+    # - django is not required because we skip the *_url tests
   commands:
     - pip check
     - pytest -v tests -k "not ({{ tests_to_skip }})"
