@@ -1,0 +1,26 @@
+From b256151b7597495253053ccbcfe81eaa9e88b8ef Mon Sep 17 00:00:00 2001
+From: Ian Fitchet <ifitchet@anaconda.com>
+Date: Fri, 19 Jul 2024 15:54:04 +0100
+Subject: [PATCH] remove some django _url test dependencies
+
+---
+ tests/test_environs.py | 3 ---
+ 1 file changed, 3 deletions(-)
+
+diff --git a/tests/test_environs.py b/tests/test_environs.py
+index 70f3034..0db29d6 100644
+--- a/tests/test_environs.py
++++ b/tests/test_environs.py
+@@ -7,9 +7,6 @@ import uuid
+ from decimal import Decimal
+ from enum import Enum
+ 
+-import dj_database_url
+-import dj_email_url
+-import django_cache_url
+ import marshmallow as ma
+ import pytest
+ from marshmallow import fields, validate
+-- 
+2.39.3 (Apple Git-146)
+
