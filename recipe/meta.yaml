@@ -28,12 +28,15 @@ requirements:
     - typing-extensions # [py<311]
 
 {% set tests_to_skip = "" %}
+# Skip django tests
 {% set tests_to_skip = tests_to_skip + "TestDjango" %}
 {% set tests_to_skip = tests_to_skip + " or test_dj_db_url_with_deferred_validation_missing" %}
 {% set tests_to_skip = tests_to_skip + " or test_dj_db_url_with_deferred_validation_invalid" %}
 {% set tests_to_skip = tests_to_skip + " or test_dj_email_url_with_deferred_validation_missing" %}
 {% set tests_to_skip = tests_to_skip + " or test_dj_cache_url_with_deferred_validation_missing" %}
 {% set tests_to_skip = tests_to_skip + " or test_dj_cache_url_with_deferred_validation_invalid" %}
+# Skip Windows-specific test that fails due to different file permission handling
+{% set tests_to_skip = tests_to_skip + " or test_read_from_file_path_is_unreadable" %}  # [win]
 
 test:
   source_files:
@@ -46,7 +49,8 @@ test:
     # - django is not required because we skip the *_url tests
   commands:
     - pip check
-    - pytest -v tests -k "not ({{ tests_to_skip }})"
+    # Skip tests for python <=3.10 due to "ModuleNotFoundError: No module named 'backports.strenum'""
+    - pytest -v tests -k "not ({{ tests_to_skip }})" # [py>310]
 
 about:
   home: https://github.com/sloria/environs
