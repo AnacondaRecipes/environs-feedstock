@@ -1,35 +1,31 @@
 {% set name = "environs" %}
-{% set version = "9.5.0" %}
+{% set version = "14.5.0" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  # Use upstream archive tarball for tests
-  url: https://github.com/sloria/environs/archive/refs/tags/{{ version }}.tar.gz
-  sha256: 1209b11f6ed2fadca24ae65a4d751ff0b4dfef1391acd75587c96b14cab3f3c8
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: f7b8f6fcf3301bc674bc9c03e39b5986d116126ffb96764efd34c339ed9464ee
   patches:
     - patches/0001-remove-some-django-_url-test-dependencies.patch
 
 build:
   number: 0
-  skip: True  # [py<36]
+  skip: True  # [py<310]
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
 
 requirements:
-  build:
-    - patch     # [not win]
-    - m2-patch  # [win]
   host:
     - python
     - pip
-    - setuptools
-    - wheel
+    - flit-core <4
   run:
     - python
-    - marshmallow >=3.0.0
+    - marshmallow >=3.18.0
     - python-dotenv
+    - typing-extensions # [py<311]
 
 {% set tests_to_skip = "" %}
 {% set tests_to_skip = tests_to_skip + "TestDjango" %}
