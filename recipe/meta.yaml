@@ -25,7 +25,7 @@ requirements:
     - python
     - marshmallow >=3.18.0
     - python-dotenv
-    - typing-extensions # [py<311]
+    - typing-extensions  # [py<311]
 
 {% set tests_to_skip = "" %}
 # Skip django tests
