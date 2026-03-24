@@ -12,7 +12,7 @@ source:
     - patches/0001-remove-some-django-_url-test-dependencies.patch
 
 build:
-  number: 0
+  number: 1
   skip: True  # [py<310]
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
 
