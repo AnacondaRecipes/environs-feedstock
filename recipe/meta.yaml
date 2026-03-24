@@ -23,7 +23,7 @@ requirements:
     - flit-core <4
   run:
     - python
-    - marshmallow >=3.13.0
+    - marshmallow >=3.13.0,<4
     - python-dotenv
 
 {% set tests_to_skip = "" %}
