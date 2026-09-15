@@ -2,7 +2,7 @@
 {% set version = "14.6.0" %}
 
 package:
-  name: {{ name|lower }}
+  name: {{ name }}
   version: {{ version }}
 
 source:
@@ -12,7 +12,7 @@ source:
     - patches/0001-remove-some-django-_url-test-dependencies.patch
 
 build:
-  number: 0
+  number: 1
   skip: True  # [py<310]
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
 
@@ -50,7 +50,7 @@ test:
   commands:
     - pip check
     # Skip tests for python <=3.10 due to "ModuleNotFoundError: No module named 'backports.strenum'""
-    - pytest -v tests -k "not ({{ tests_to_skip }})" # [py>310]
+    - pytest -vv tests -k "not ({{ tests_to_skip }})" # [py>310]
 
 about:
   home: https://github.com/sloria/environs
