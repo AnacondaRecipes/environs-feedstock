@@ -1,26 +1,24 @@
-From b256151b7597495253053ccbcfe81eaa9e88b8ef Mon Sep 17 00:00:00 2001
+From 65d83972375d235cb28508247e726f7701eed9f5 Mon Sep 17 00:00:00 2001
 From: Ian Fitchet <ifitchet@anaconda.com>
-Date: Fri, 19 Jul 2024 15:54:04 +0100
+Date: Thu, 19 Nov 2026 09:55:29 +0200
 Subject: [PATCH] remove some django _url test dependencies
 
+The django *_url tests are skipped; drop the top-level dj_* imports so the suite imports without the django optional extras installed.
 ---
  tests/test_environs.py | 3 ---
  1 file changed, 3 deletions(-)
 
 diff --git a/tests/test_environs.py b/tests/test_environs.py
-index 70f3034..0db29d6 100644
+index 7baf13c..6eb8358 100644
 --- a/tests/test_environs.py
 +++ b/tests/test_environs.py
-@@ -7,9 +7,6 @@ import uuid
- from decimal import Decimal
- from enum import Enum
+@@ -13,9 +13,6 @@ try:
+ except ImportError:
+     from backports.strenum import StrEnum  # type: ignore[no-redef]
  
 -import dj_database_url
 -import dj_email_url
 -import django_cache_url
  import marshmallow as ma
  import pytest
- from marshmallow import fields, validate
--- 
-2.39.3 (Apple Git-146)
-
+ from marshmallow import fields

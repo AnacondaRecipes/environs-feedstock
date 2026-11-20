@@ -1,5 +1,5 @@
 {% set name = "environs" %}
-{% set version = "14.6.0" %}
+{% set version = "15.2.0" %}
 
 package:
   name: {{ name }}
@@ -7,13 +7,13 @@ package:
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: ed2767588deb503209ffe4dd9bb2b39311c2e4e7e27ce2c64bf62ca83328d068
+  sha256: 1bfc0d32b43692f28a6e294ad2b69903d43a214672ebcf3124a66d66b52b2418
   patches:
     - patches/0001-remove-some-django-_url-test-dependencies.patch
 
 build:
-  number: 1
-  skip: True  # [py<310]
+  number: 0
+  skip: true  # [py<310]
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
 
 requirements:
@@ -23,7 +23,7 @@ requirements:
     - flit-core <4
   run:
     - python
-    - marshmallow >=3.26.2
+    - marshmallow >=4.0.0
     - python-dotenv
     - typing-extensions  # [py<311]
 
